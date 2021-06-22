@@ -12,9 +12,18 @@ const SortButton = () => {
     };
     return (
         <div>
-            <button onClick={orderNotesHandler} type="submit">
+            <button className="sort-button" onClick={orderNotesHandler} type="submit">
                 <p>Sort Tasks</p>
             </button>
+            {count === 0 && (
+                <p className="margin-0 info-order">Ordered by creation date</p>
+            )}
+            {count === 1 && (
+                <p className="margin-0 info-order">Ordered by Alphabetical order - from A to Z</p>
+            )}
+            {count === 2 && (
+                <p className="margin-0 info-order">Ordered by Alphabetical order - from Z to A</p>
+            )}
         </div>
     );
 };

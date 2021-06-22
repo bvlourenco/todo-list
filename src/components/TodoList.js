@@ -6,12 +6,9 @@ const TodoList = () => {
     const { state } = useContext(ListContext);
     return (
         <div>
-            <ul>
-                {state.filteredList.map((note) => (
-                    <Note note={note} key={note.id} />
-                ))}
-            </ul>
-
+            {state.filteredList.map((note) => (
+                <Note note={note} key={note.id} />
+            ))}
         </div>
     );
 };

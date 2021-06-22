@@ -4,16 +4,23 @@ import { ACTION } from "../ListReducer";
 
 const Note = ({ note }) => {
   const { dispatch } = useContext(ListContext);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(note.text);
   const [update, setUpdate] = useState(false);
   const noteHandler = (e) => {
     setText(e.target.value);
   };
   const submitNoteHandler = (e) => {
     e.preventDefault();
-    dispatch({ type: ACTION.EDIT_NOTE, payload: { id: note.id, text: text } });
-    setUpdate(false);
-    setText("");
+    if (text.trim() !== "") {
+      dispatch({
+        type: ACTION.EDIT_NOTE,
+        payload: { id: note.id, text: text },
+      });
+      setUpdate(false);
+      setText(text);
+    } else {
+      alert("Cannot update note because the updated text is empty");
+    }
   };
   const deleteNoteHandler = () => {
     dispatch({ type: ACTION.DELETE_NOTE, payload: note.id });
@@ -26,25 +33,40 @@ const Note = ({ note }) => {
   };
   return (
     <div className="row">
-      <input onClick={changeNoteStatusHandler} type="checkbox" checked={note.done}/>
+      <input
+        className="checkbox offset"
+        onClick={changeNoteStatusHandler}
+        type="checkbox"
+        checked={note.done}
+      />
       {!update && (
-        <li className={`note ${note.done ? "completed" : ""}`}>{note.text}</li>
+        <div className="note-description">
+          <p className={`note ${note.done ? "completed" : ""}`}>{note.text}</p>
+        </div>
       )}
       {update && (
-        <div>
-          <input value={text} onChange={noteHandler} type="text" />
-          <button onClick={submitNoteHandler} type="submit">
+        <div className="row">
+          <input
+            value={text}
+            onChange={noteHandler}
+            type="text"
+          />
+          <button
+            className="submit-button"
+            onClick={submitNoteHandler}
+            type="submit"
+          >
             <p>Submit changes</p>
           </button>
         </div>
       )}
       {!update && (
-        <button onClick={changeNoteContentHandler}>
-          <p>EDIT</p>
+        <button className="edit-button" onClick={changeNoteContentHandler}>
+          <p>Edit</p>
         </button>
       )}
-      <button onClick={deleteNoteHandler}>
-        <p>DELETE</p>
+      <button className="delete-button" onClick={deleteNoteHandler}>
+        <p>Delete</p>
       </button>
     </div>
   );

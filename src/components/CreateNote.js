@@ -10,13 +10,17 @@ const CreateNote = () => {
     };
     const submitNoteHandler = (e) => {
         e.preventDefault();
-        dispatch({ type: ACTION.ADD_NOTE, payload: text });
-        setText('');
+        if(text.trim() !== '') {
+            dispatch({ type: ACTION.ADD_NOTE, payload: text });
+            setText('');
+        } else {
+            alert('Note Empty');
+        }
     };
     return (
         <form className="form">
-            <input value={text} onChange={noteHandler} type="text" />
-            <button onClick={submitNoteHandler} type="submit">
+            <input className="textarea" value={text} onChange={noteHandler} type="text" placeholder="Type your note here" size="100" />
+            <button className="create-button" onClick={submitNoteHandler} type="submit">
                 <p>Create</p>
             </button>
         </form>

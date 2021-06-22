@@ -8,8 +8,8 @@ const FilterButton = () => {
         dispatch({ type: ACTION.FILTER_NOTES, payload: e.target.checked });
     };
     return (
-        <div className="row">
-            <input onClick={filterNotesHandler} type="checkbox" />
+        <div className="row center fixed">
+            <input className="checkbox" onClick={filterNotesHandler} type="checkbox" />
             <p>Hide Completed Tasks</p>
         </div>
     );
